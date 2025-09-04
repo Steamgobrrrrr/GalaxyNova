@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - main
+      - "**"
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build_and_deploy_docusaurus:
-    name: Build and Deploy Docusaurus based static site to Wasmer Edge
+  build_and_deploy_astro:
+    name: Build and deploy an Remix template to Wasmer Edge
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,9 +42,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-      - name: Install Docusaurus's dependencies
+      - name: Install Remix's dependencies
         run: pnpm install
-      - name: Build Docusaurus
+      - name: Build Remix website
         run: pnpm build
       - name: Deploy app to Wasmer Edge
         run: wasmer deploy --token=${{ secrets.WASMER_CIUSER_PROD_TOKEN }} --publish-package --non-interactive --no-wait --no-persist-id

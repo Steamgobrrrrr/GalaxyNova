@@ -2,4 +2,4 @@
 "wasmer/static-web-server" = "*"
 
 [fs]
-public = "build"
+public = "public"
